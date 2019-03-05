@@ -1,33 +1,40 @@
 package com.mvvm.dagger.rx.sample.photos
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
 import android.databinding.ObservableBoolean
 import com.mvvm.dagger.rx.sample.base.BaseViewModel
 import com.mvvm.dagger.rx.sample.data.room.Photo
 import com.mvvm.dagger.rx.sample.data.photos.PhotosRepository
 import com.mvvm.dagger.rx.sample.livedata.Event
+import com.mvvm.dagger.rx.sample.utils.addTo
+import com.mvvm.dagger.rx.sample.utils.applyIoAndMainThreads
+import com.mvvm.dagger.rx.sample.utils.getEventError
 import javax.inject.Inject
 
 class PhotosViewModel @Inject constructor(application: Application, private val photosRepository: PhotosRepository): BaseViewModel(application) {
 
     val isLoading = ObservableBoolean(false)
 
-    private val getPhotos = MutableLiveData<Event<Unit>>()
-
-    val photos: LiveData<Event<List<Photo>>> = Transformations.switchMap(getPhotos) {
-        photosRepository.getPhotos(getApplication())
-    }
+    val photos = MutableLiveData<Event<List<Photo>>>()
 
     fun getPhotos() {
-        showProgress()
-        getPhotos.value = Event.loading()
+        photosRepository.getPhotos(getApplication())
+                .applyIoAndMainThreads()
+                .doOnSubscribe { showProgress() }
+                .doAfterTerminate { hideProgress() }
+                .subscribe(
+                        {
+                            photos.value = Event.success(it)
+                        },
+                        {
+                            photos.value = it.getEventError()
+                        })
+                .addTo(compositeDisposable)
     }
 
     private fun showProgress() = isLoading.set(true)
 
-    fun hideProgress() = isLoading.set(false)
+    private fun hideProgress() = isLoading.set(false)
 
 }

@@ -1,18 +1,15 @@
 package com.mvvm.dagger.rx.sample.register
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.mvvm.dagger.rx.sample.R
 import com.mvvm.dagger.rx.sample.base.BaseViewModel
 import com.mvvm.dagger.rx.sample.data.user.UserRepository
 import com.mvvm.dagger.rx.sample.databinding.BindingAdapters
-import com.mvvm.dagger.rx.sample.utils.checkField
-import com.mvvm.dagger.rx.sample.utils.getValueOrDefault
 import com.mvvm.dagger.rx.sample.livedata.Event
+import com.mvvm.dagger.rx.sample.utils.*
 import com.mvvm.dagger.rx.sample.webservice.RegisterRequest
 import com.mvvm.dagger.rx.sample.webservice.RegisterResponse
 import javax.inject.Inject
@@ -29,16 +26,23 @@ class RegisterViewModel @Inject constructor(application: Application, private va
 
     val isLoading = ObservableField(false)
 
-    private val registerEvent = MutableLiveData<Event<Unit>>()
-
-    val registerResponse: LiveData<Event<RegisterResponse>> = Transformations.switchMap(registerEvent) {
-        userRepository.register(getApplication(), RegisterRequest(name.getValueOrDefault(), email.getValueOrDefault(), password.getValueOrDefault()))
-    }
+    val registerEvent = MutableLiveData<Event<RegisterResponse>>()
 
     fun register() {
         if (isValidForm()) {
-            showProgress()
-            registerEvent.value = Event.loading()
+            userRepository.register(getApplication(), RegisterRequest(name.getValueOrDefault(), email.getValueOrDefault(), password.getValueOrDefault()))
+                    .applyIoAndMainThreads()
+                    .doOnSubscribe { showProgress() }
+                    .doAfterTerminate { hideProgress() }
+                    .subscribe(
+                            {
+                                registerEvent.value = Event.success(it)
+                            },
+                            {
+                                registerEvent.value = it.getEventError()
+                            }
+                    )
+                    .addTo(compositeDisposable)
         } else {
             errorName.checkField(R.string.error_name_empty,isValidName())
             errorEmail.checkField(R.string.error_invalid_email,isValidEmail())
@@ -56,5 +60,5 @@ class RegisterViewModel @Inject constructor(application: Application, private va
 
     private fun showProgress() = isLoading.set(true)
 
-    fun hideProgress() = isLoading.set(false)
+    private fun hideProgress() = isLoading.set(false)
 }

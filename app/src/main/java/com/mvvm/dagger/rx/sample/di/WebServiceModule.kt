@@ -3,13 +3,13 @@ package com.mvvm.dagger.rx.sample.di
 import android.content.Context
 import com.mvvm.dagger.rx.sample.BuildConfig
 import com.mvvm.dagger.rx.sample.data.preference.PreferenceManager
-import com.mvvm.dagger.rx.sample.livedata.LiveDataCallAdapterFactory
 import com.mvvm.dagger.rx.sample.webservice.IApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -51,7 +51,7 @@ class WebServiceModule {
             Retrofit.Builder()
                     .baseUrl(BuildConfig.SERVER_URL)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(LiveDataCallAdapterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient).build()
 
     @Singleton
