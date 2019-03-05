@@ -1,6 +1,6 @@
 package com.mvvm.dagger.rx.sample.register
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import com.mvvm.dagger.rx.sample.BR
 import com.mvvm.dagger.rx.sample.R
 import com.mvvm.dagger.rx.sample.base.BaseActivity

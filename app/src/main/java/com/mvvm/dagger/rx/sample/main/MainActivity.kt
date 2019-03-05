@@ -1,12 +1,12 @@
 package com.mvvm.dagger.rx.sample.main
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.lifecycle.Observer
+import com.google.android.material.navigation.NavigationView
 import com.mvvm.dagger.rx.sample.base.BaseActivity
 import com.mvvm.dagger.rx.sample.R
 import com.mvvm.dagger.rx.sample.data.room.User

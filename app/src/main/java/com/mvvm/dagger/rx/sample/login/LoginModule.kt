@@ -1,6 +1,6 @@
 package com.mvvm.dagger.rx.sample.login
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.mvvm.dagger.rx.sample.di.ActivityScope
 import com.mvvm.dagger.rx.sample.di.ViewModelKey
 import dagger.Binds

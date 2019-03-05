@@ -1,15 +1,15 @@
 package com.mvvm.dagger.rx.sample.base
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.mvvm.dagger.rx.sample.R
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.alert
@@ -47,7 +47,7 @@ abstract class BaseFragment<VM: BaseViewModel,DB: ViewDataBinding>: Fragment(), 
 
     open fun initView(inflater: LayoutInflater, container: ViewGroup?) {
         dataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        dataBinding.setLifecycleOwner(this)
+        dataBinding.lifecycleOwner = this
         for ((variableId,value) in getVariablesToBind()) {
             dataBinding.setVariable(variableId,value)
         }

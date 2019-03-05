@@ -2,9 +2,9 @@ package com.mvvm.dagger.rx.sample.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.graphics.drawable.Drawable
+import androidx.recyclerview.widget.RecyclerView
 import com.mvvm.dagger.rx.sample.R
 
 class SimpleDividerItemDecorator(context: Context) : RecyclerView.ItemDecoration() {

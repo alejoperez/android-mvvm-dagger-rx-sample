@@ -1,8 +1,8 @@
 package com.mvvm.dagger.rx.sample.utils
 
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import com.mvvm.dagger.rx.sample.databinding.BindingAdapters
 
 fun ObservableInt.checkField(@StringRes errorResource: Int, isValid: Boolean) {

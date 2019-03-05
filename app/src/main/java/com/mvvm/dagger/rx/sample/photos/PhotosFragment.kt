@@ -1,9 +1,9 @@
 package com.mvvm.dagger.rx.sample.photos
 
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mvvm.dagger.rx.sample.BR
 import com.mvvm.dagger.rx.sample.R
 import com.mvvm.dagger.rx.sample.base.BaseFragment

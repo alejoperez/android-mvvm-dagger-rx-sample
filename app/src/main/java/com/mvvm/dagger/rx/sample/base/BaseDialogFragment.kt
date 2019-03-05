@@ -1,14 +1,14 @@
 package com.mvvm.dagger.rx.sample.base
 
 import android.app.Dialog
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.mvvm.dagger.rx.sample.R
 import dagger.android.support.AndroidSupportInjection
 import org.jetbrains.anko.alert
@@ -46,7 +46,7 @@ abstract class BaseDialogFragment<VM: BaseViewModel,DB: ViewDataBinding>: Dialog
 
     open fun initView() {
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(getViewContext()), getLayoutId(), null,false)
-        dataBinding.setLifecycleOwner(this)
+        dataBinding.lifecycleOwner = this
         for ((variableId,value) in getVariablesToBind()) {
             dataBinding.setVariable(variableId,value)
         }

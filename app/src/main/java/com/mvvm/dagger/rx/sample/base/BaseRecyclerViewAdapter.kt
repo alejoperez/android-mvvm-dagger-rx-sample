@@ -1,11 +1,11 @@
 package com.mvvm.dagger.rx.sample.base
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import android.view.ViewGroup
 import com.mvvm.dagger.rx.sample.BR
 import android.view.LayoutInflater
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseRecyclerViewAdapter(private val list: List<Any>?, private val listener: BaseRecyclerViewAdapter.OnItemClickListener? = null): RecyclerView.Adapter<BaseRecyclerViewAdapter.BaseViewHolder>() {
 

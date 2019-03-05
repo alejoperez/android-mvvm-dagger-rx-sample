@@ -1,14 +1,14 @@
 package com.mvvm.dagger.rx.sample.base
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.mvvm.dagger.rx.sample.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.toolbar.*
@@ -42,14 +42,14 @@ abstract class BaseActivity<VM: BaseViewModel,DB: ViewDataBinding> : AppCompatAc
 
     open fun initView() {
         dataBinding = DataBindingUtil.setContentView(this, getLayoutId())
-        dataBinding.setLifecycleOwner(this)
+        dataBinding.lifecycleOwner = this
         for ((variableId,value) in getVariablesToBind()) {
             dataBinding.setVariable(variableId,value)
         }
         dataBinding.executePendingBindings()
     }
 
-    fun setToolbarTitle(textInt: Int) = toolbar?.setTitle(textInt)
+    fun setToolbarTitle(textInt: Int) = toolbar.setTitle(textInt)
 
     override fun isActive(): Boolean = !isFinishing
 
