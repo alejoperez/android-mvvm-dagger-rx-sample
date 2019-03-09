@@ -40,13 +40,7 @@ class PhotosFragment : BaseFragment<PhotosViewModel,FragmentPhotosBinding>(), Ba
         viewModel.getPhotos()
     }
 
-    private val onPhotosResponseObserver = Observer<Event<List<Photo>>> {
-        if (it != null) {
-            onPhotosResponse(it)
-        } else {
-            onPhotosFailure()
-        }
-    }
+    private val onPhotosResponseObserver = Observer<Event<List<Photo>>> { onPhotosResponse(it) }
 
     private fun onPhotosResponse(response: Event<List<Photo>>) {
         when(response.status) {

@@ -53,13 +53,7 @@ class PlacesFragment: BaseFragment<PlacesViewModel,FragmentPlacesBinding>(), OnM
         }
     }
 
-    private val placesResponseObserver = Observer<Event<List<Place>>>{
-        if (it != null) {
-            onPlacesResponse(it)
-        } else {
-            onPlacesFailure()
-        }
-    }
+    private val placesResponseObserver = Observer<Event<List<Place>>>{ onPlacesResponse(it) }
 
     override fun onMapReady(gm: GoogleMap) {
         googleMap = gm

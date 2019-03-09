@@ -34,13 +34,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel,ActivityRegisterBinding>
         dataBinding.tvGoToLogin.setOnClickListener { startActivity<LoginActivity>() }
     }
 
-    private val onRegisterResponseObserver = Observer<Event<RegisterResponse>> {
-        if(it != null) {
-            onRegisterResponse(it)
-        } else {
-            onRegisterFailure()
-        }
-    }
+    private val onRegisterResponseObserver = Observer<Event<RegisterResponse>> { onRegisterResponse(it) }
 
     private fun onRegisterResponse(response: Event<RegisterResponse>) {
         when(response.status) {

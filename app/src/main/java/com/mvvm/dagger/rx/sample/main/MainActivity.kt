@@ -13,6 +13,7 @@ import com.mvvm.dagger.rx.sample.data.room.User
 import com.mvvm.dagger.rx.sample.databinding.ActivityMainBinding
 import com.mvvm.dagger.rx.sample.livedata.Event
 import com.mvvm.dagger.rx.sample.livedata.EventObserver
+import com.mvvm.dagger.rx.sample.livedata.Status
 import com.mvvm.dagger.rx.sample.photos.PhotosFragment
 import com.mvvm.dagger.rx.sample.places.PlacesFragment
 import kotlinx.android.synthetic.main.toolbar.*
@@ -26,7 +27,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), Navigat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarTitle(R.string.app_name)
-        replaceFragment(PlacesFragment.newInstance(),R.id.main_content_view, PlacesFragment.TAG)
+        replaceFragment(PlacesFragment.newInstance(), R.id.main_content_view, PlacesFragment.TAG)
     }
 
     override fun initView() {
@@ -51,15 +52,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), Navigat
     }
 
     private val onLogoutSuccessObserver = EventObserver<Unit> { finishAffinity() }
-    private val userEventObserver = Observer<Event<User>> {
-        if (it != null) {
-            onUserSuccess(it)
+    private val userEventObserver = Observer<Event<User>> { onUserResponseSuccess(it) }
+
+    private fun onUserResponseSuccess(response: Event<User>) {
+        when (response.status) {
+            Status.SUCCESS -> {
+                dataBinding.user = response.peekData()
+            }
+            else -> showAlert(R.string.error_user)
         }
     }
 
-    private fun onUserSuccess(response: Event<User>) {
-        dataBinding.user = response.peekData()
-    }
 
     override fun onBackPressed() {
         if (dataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -77,10 +80,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), Navigat
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_places -> {
-                replaceFragment(PlacesFragment.newInstance(),R.id.main_content_view, PlacesFragment.TAG)
+                replaceFragment(PlacesFragment.newInstance(), R.id.main_content_view, PlacesFragment.TAG)
             }
             R.id.nav_photos -> {
-                replaceFragment(PhotosFragment.newInstance(),R.id.main_content_view, PhotosFragment.TAG)
+                replaceFragment(PhotosFragment.newInstance(), R.id.main_content_view, PhotosFragment.TAG)
             }
             R.id.nav_logout -> {
                 viewModel.logout()

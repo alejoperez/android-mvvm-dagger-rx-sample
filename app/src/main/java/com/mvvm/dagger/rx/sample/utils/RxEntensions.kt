@@ -31,7 +31,7 @@ fun Disposable.addTo(compositeDisposable: CompositeDisposable) {
 
 fun <T> Throwable.getEventError(): Event<T> {
     return when (this) {
-        is HttpException -> Event.failure()
-        else -> Event.networkError()
+        is HttpException -> Event.networkError()
+        else -> Event.failure()
     }
 }

@@ -26,13 +26,7 @@ class LoginActivity : BaseActivity<LoginViewModel,ActivityLoginBinding>() {
         viewModel.loginEvent.observe(this, onLoginResponseObserver)
     }
 
-    private val onLoginResponseObserver = Observer<Event<LoginResponse>> {
-        if (it != null) {
-            onLoginResponse(it)
-        } else {
-            onLoginFailure()
-        }
-    }
+    private val onLoginResponseObserver = Observer<Event<LoginResponse>> { onLoginResponse(it) }
 
     private fun onLoginResponse(response: Event<LoginResponse>) {
         when (response.status) {

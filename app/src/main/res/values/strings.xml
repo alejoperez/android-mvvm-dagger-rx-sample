@@ -11,6 +11,8 @@
 
     <!-- Errors START-->
     <string name="error_network">Network Error</string>
+    <string name="error_splash">Splash Error</string>
+    <string name="error_user">User Error</string>
     <string name="error_invalid_credentials">Invalid Credentials</string>
     <string name="error_invalid_email">Invalid Email Format</string>
     <string name="error_empty_password">Empty Password</string>
