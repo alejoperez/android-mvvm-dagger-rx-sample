@@ -76,7 +76,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
     //Android Support
-    implementation "androidx.legacy:legacy-support-v4:$android_x_version"
+    implementation "androidx.legacy:legacy-support-v4:$android_legacy_version"
     implementation "androidx.annotation:annotation:$android_x_version"
     implementation "androidx.recyclerview:recyclerview:$android_x_version"
     implementation "com.google.android.material:material:$google_android_material_version"

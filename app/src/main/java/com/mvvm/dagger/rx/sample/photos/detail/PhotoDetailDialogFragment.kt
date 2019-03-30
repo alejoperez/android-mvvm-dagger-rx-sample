@@ -33,7 +33,7 @@ class PhotoDetailDialogFragment : BaseDialogFragment<PhotoDetailViewModel, Dialo
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(activity).apply {
-            setView(dataBinding.root).setPositiveButton(R.string.accept) { _, _ -> dialog.cancel() }
+            setView(dataBinding.root).setPositiveButton(R.string.accept) { _, _ -> dialog?.cancel() }
         }.create()
     }
 
